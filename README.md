@@ -1,4 +1,4 @@
-javascript闭包
+javascript闭包（完善中...）
 =============
 
 ## 闭包概念
@@ -22,9 +22,54 @@ javascript中为什么会形成闭包？
 
 先理解作用域，和函数
 
+javascript 关于作用域和闭包
+
 ## 闭包使用的利与弊
 
+### 闭包的好处
+
+1. 缓存
+2. 面向对象中的对象
+3. 实现封装，防止变量跑到外层作用域中，发生命名冲突
+4. 匿名自执行函数，匿名自执行函数可以减小内存消耗
+
+http://blog.csdn.net/sunlylorn/article/details/6534610
+
+### 闭包的坏处
+
+1. 内存消耗
+
+> 通常来说，函数的活动对象会随着执行上下文一起销毁，但是由于闭包引用另外一个函数的活动对象，因此这个活动函数无法销毁。这意味着，闭包比一般的函数需要更多的内训消耗。尤其是IE浏览器需要关注。由于IE使用非原生javascript对象实现dom对象，因此闭包会导致内存泄漏问题。
+
+2. 性能问题
+
+> 使用闭包时，会涉及到跨作用域访问，每次访问都会导致性能损失。因此在脚本中，最好小心使用闭包，它同时会涉及到内存和速度的问题。不过我们可以通过跨作用域变量存储在局部变量中，然后直接访问局部变量，来减轻对执行速度的影响。
+
+http://blog.csdn.net/vuturn/article/details/44560717
+
 代码中使用闭包会带来那些好处和坏处？
+
+## 终极测试题
+
+```js
+
+function fun(n, o) {
+	console.log(o);
+	return {
+		fun: function(m){
+			return fun(m, n);
+		}
+	};
+};
+
+var a = fun(0); a.fun(1); a.fun(2); a.fun(3); // undefined,?,?,?
+var b = fun(0).fun(1).fun(2).fun(3); // undefined,?,?,?
+var c = fun(0).fun(1); c.fun(2); c.fun(3); // undefined,?,?,?
+// 问：三行a,b,c的输出分别是什么？不要急着看答案哦
+
+```
+
+[我是答案](https://smileyby.github.io/js-closure/)
 
 ## 参考文章
 
@@ -35,3 +80,5 @@ http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html
 http://www.cnblogs.com/mguo/archive/2013/06/19/3143880.html
 
 http://www.cnblogs.com/xxcanghai/p/4991870.html
+
+
